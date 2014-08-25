@@ -1521,8 +1521,8 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 	local iSDD = tonumber(self.userSettings.incomingShieldDamageDisable)
 	if type(nShieldDamaged) == "number" and nShieldDamaged > 0 then
 		if iSDD == 1 then
-			--nTotalDamage = nDamage + nShieldDamaged
-			nTotalDamage = nDamage
+			nTotalDamage = nDamage + nShieldDamaged
+			--nTotalDamage = nDamage
 		else
 			nTotalDamage = nDamage.."("..nShieldDamaged..")" --Shield Damage in "()"
 		end
@@ -2269,11 +2269,11 @@ function YetAnotherSCT:OnDisableOutgoingShieldDamageUnCheck( wndHandler, wndCont
 	self.userSettings.outgoingShieldDamageDisable = 0
 end
 
-function YetAnotherSCT:OnDisableOutgoingShieldDamageCheck( wndHandler, wndControl, eMouseButton )
+function YetAnotherSCT:OnDisableIncomingShieldDamageCheck( wndHandler, wndControl, eMouseButton )
 	self.userSettings.incomingShieldDamageDisable = 1
 end
 
-function YetAnotherSCT:OnDisableOutgoingShieldDamageUnCheck( wndHandler, wndControl, eMouseButton )
+function YetAnotherSCT:OnDisableIncomingShieldDamageUnCheck( wndHandler, wndControl, eMouseButton )
 	self.userSettings.incomingShieldDamageDisable = 0
 end
 

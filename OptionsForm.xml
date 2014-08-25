@@ -120,8 +120,8 @@
                 <Event Name="ButtonUncheck" Function="OnDisableIncomingDamageUnCheck"/>
             </Control>
             <Control Class="Button" Base="BK3:btnHolo_Check" Font="DefaultButton" ButtonType="Check" RadioGroup="" LAnchorPoint="0" LAnchorOffset="168" TAnchorPoint="0" TAnchorOffset="40" RAnchorPoint="0" RAnchorOffset="427" BAnchorPoint="0" BAnchorOffset="67" DT_VCENTER="1" DT_CENTER="1" BGColor="UI_BtnBGDefault" TextColor="UI_BtnTextDefault" NormalTextColor="UI_BtnTextDefault" PressedTextColor="UI_BtnTextDefault" FlybyTextColor="UI_BtnTextDefault" PressedFlybyTextColor="UI_BtnTextDefault" DisabledTextColor="UI_BtnTextDefault" TooltipType="OnCursor" Name="DisableIncomingShieldDamage" TooltipColor="" Text="Disable Separate Shield Damage" TextId="" Tooltip="">
-                <Event Name="ButtonCheck" Function="OnDisableOutgoingShieldDamageCheck"/>
-                <Event Name="ButtonUncheck" Function="OnDisableOutgoingShieldDamageUnCheck"/>
+                <Event Name="ButtonCheck" Function="OnDisableIncomingShieldDamageCheck"/>
+                <Event Name="ButtonUncheck" Function="OnDisableIncomingShieldDamageUnCheck"/>
             </Control>
         </Control>
         <Control Class="Window" LAnchorPoint="0" LAnchorOffset="4" TAnchorPoint="0" TAnchorOffset="2024" RAnchorPoint="1" RAnchorOffset="-5" BAnchorPoint="0" BAnchorOffset="2542" RelativeToClient="1" Font="Default" Text="" BGColor="UI_WindowBGDefault" TextColor="UI_WindowTextDefault" Template="HologramControl1" TooltipType="OnCursor" Name="Incoming_HealSettings" TooltipColor="" Border="1" IgnoreMouse="1">
