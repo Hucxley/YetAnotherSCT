@@ -1,0 +1,9 @@
+<Addon Name="YetAnotherSCT" Version="1" Author="OTG Addon Crew" APIVersion="9" Description="">
+    <Script Name="YetAnotherSCT.lua"/>
+    <Script Name="FloatTextPanel.lua"/>
+    <Form Name="TestFloatTextForms.xml"/>
+    <Form Name="FloatTextPanel.xml"/>
+    <Form Name="OptionsForm.xml"/>
+    <ReplaceAddon Name="FloatText"/>
+    <ReplaceAddon Name="FloatTextPanel"/>
+</Addon>
