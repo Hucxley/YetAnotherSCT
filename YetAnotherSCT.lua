@@ -68,6 +68,7 @@ local YetAnotherSCT = {
 		outgoingHealFlashColor = "ffffff",
 	--Incoming Damage
 		incomingDamageDisable = 0,
+		incomingShieldDamageDisable = 0,
 		incomingDamageFont = "CRB_FloaterLarge",
 		incomingCritDamageFont = "CRB_FloaterLarge",
 		incomingDamageFontSize = 0.8,
@@ -197,6 +198,7 @@ function YetAnotherSCT:DefaultSettings()
 	self.userSettings.outgoingHealFlashColor = "ffffff"
 
 	self.userSettings.incomingDamageDisable = 0
+	self.userSettings.incomingShieldDamageDisable = 0
 	self.userSettings.incomingDamageFont = "CRB_FloaterLarge"
 	self.userSettings.incomingCritDamageFont = "CRB_FloaterLarge"
 	self.userSettings.incomingDamageFontSize = 0.8
@@ -357,6 +359,14 @@ function YetAnotherSCT:LoadUserSettings()
 	self.wndMain:FindChild("IDTF"):SetFont(self.userSettings.incomingDamageFont)
 	incomingDamageColorAsCColor = self:Hex_To_CColor(self.userSettings.incomingDamageFontColor)
 	incomingCritColorAsCColor = self:Hex_To_CColor(self.userSettings.incomingCritDamageFontColor)
+
+		-- Incoming Shield Damage
+	local iSDD = tonumber(self.userSettings.incomingShieldDamageDisable)
+	if iSDD == 0 then
+		self.wndMain:FindChild("DisableIncomingShieldDamage"):SetCheck(false)
+	else
+		self.wndMain:FindChild("DisableIncomingShieldDamage"):SetCheck(true)
+	end
 
 	--Incoming Heal
 	local iHD = tonumber(self.userSettings.incomingHealDisable)
@@ -1508,8 +1518,15 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 		}
 	end
 	local nTotalDamage = nDamage
+	local iSDD = tonumber(self.userSettings.incomingShieldDamageDisable)
 	if type(nShieldDamaged) == "number" and nShieldDamaged > 0 then
-		nTotalDamage = nDamage.."("..nShieldDamaged..")"
+		if iSDD == 1 then
+			--nTotalDamage = nDamage + nShieldDamaged
+			nTotalDamage = nDamage
+		else
+			nTotalDamage = nDamage.."("..nShieldDamaged..")" --Shield Damage in "()"
+		end
+
 	end
 
 	local bHeal = eDamageType == GameLib.CodeEnumDamageType.Heal or eDamageType == GameLib.CodeEnumDamageType.HealShields
@@ -2250,6 +2267,14 @@ end
 
 function YetAnotherSCT:OnDisableOutgoingShieldDamageUnCheck( wndHandler, wndControl, eMouseButton )
 	self.userSettings.outgoingShieldDamageDisable = 0
+end
+
+function YetAnotherSCT:OnDisableOutgoingShieldDamageCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.incomingShieldDamageDisable = 1
+end
+
+function YetAnotherSCT:OnDisableOutgoingShieldDamageUnCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.incomingShieldDamageDisable = 0
 end
 
 ---------------------------------------------------------------------------------------------------
