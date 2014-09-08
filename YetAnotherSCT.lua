@@ -34,11 +34,15 @@ local YetAnotherSCT = {
 		ccStateEnemyFontDuration = 2,
 		splitIncoming = 0,
 		swapIncoming = 0,
+		mergeIncoming = 0,
+		invertMergeIncoming = 0,
 		splitOutgoing = 0,
 		swapOutgoing = 0,
+		mergeOutgoing = 0,
+		invertMergeOutgoing = 0,
 		hideSpellCastFail = 0,
 		CriticalHitMarker = "*",
-		sCombatTextAnchor = CombatFloater.CodeEnumFloaterLocation.Chest,
+		sCombatTextAnchor = CombatFloater.CodeEnumFloaterLocation.Head,
 	--Outgoing Damage
 		outgoingDamageDisable = 0,
 		outgoingShieldDamageDisable = 0,
@@ -130,6 +134,8 @@ function YetAnotherSCT:OnLoad() -- OnLoad then GetAsyncLoad then OnRestore
 	Apollo.RegisterSlashCommand("yasct", 					"OnYetAnotherSCTOn", self)
 	Apollo.RegisterSlashCommand("YASCT", 					"OnYetAnotherSCTOn", self)
 	self.xmlDoc = XmlDoc.CreateFromFile("OptionsForm.xml")
+	self.Custom = XmlDoc.CreateFromFile("YASCTCustomizationAssist.xml")
+
 	
 	--TODO
 	--self:DefaultSettings()
@@ -232,11 +238,15 @@ function YetAnotherSCT:DefaultSettings()
 	self.userSettings.ccStateEnemyFontDuration = 2
 	self.userSettings.splitIncoming = 0
 	self.userSettings.swapIncoming = 0
+	self.userSettings.mergeIncoming = 0
 	self.userSettings.splitOutgoing = 0
 	self.userSettings.swapOutgoing = 0
+	self.userSettings.mergeOutgoing = 0
 	self.userSettings.hideSpellCastFail = 0
 	self.userSettings.CriticalHitMarker = "*"
-	self.userSettings.sCombatTextAnchor = CombatFloater.CodeEnumFloaterLocation.Bottom
+	self.userSettings.invertMergeIncoming = 0
+	self.userSettings.invertMergeOutgoing = 0
+	self.userSettings.sCombatTextAnchor = CombatFloater.CodeEnumFloaterLocation.Head
 
 	--TODO SetDefaultValues
 	self:LoadUserSettings()
@@ -286,6 +296,34 @@ function YetAnotherSCT:LoadUserSettings()
 		self.wndMain:FindChild("SwapOutgoing"):SetCheck(false)
 	else 
 	 	self.wndMain:FindChild("SwapOutgoing"):SetCheck(true)
+	end
+
+	local mI = tonumber(self.userSettings.mergeIncoming)
+	if  mI == 0 then
+		self.wndMain:FindChild("MergeIncoming"):SetCheck(false)
+	else 
+	 	self.wndMain:FindChild("MergeIncoming"):SetCheck(true)
+	end
+
+	local mO = tonumber(self.userSettings.mergeOutgoing)
+	if  mO == 0 then
+		self.wndMain:FindChild("MergeOutgoing"):SetCheck(false)
+	else 
+	 	self.wndMain:FindChild("MergeOutgoing"):SetCheck(true)
+	end
+
+	local invertMI = tonumber(self.userSettings.invertMergeIncoming)
+	if  invertMI == 0 then
+		self.wndMain:FindChild("InvertMergedIncoming"):SetCheck(false)
+	else 
+	 	self.wndMain:FindChild("InvertMergedIncoming"):SetCheck(true)
+	end
+
+	local invertMO = tonumber(self.userSettings.invertMergeOutgoing)
+	if  invertMO == 0 then
+		self.wndMain:FindChild("InvertMergedOutgoing"):SetCheck(false)
+	else 
+	 	self.wndMain:FindChild("InvertMergedOutgoing"):SetCheck(true)
 	end
 	
 	ccStatePlayerColorAsCColor = self:Hex_To_CColor(self.userSettings.ccStatePlayerFontColor)
@@ -389,29 +427,42 @@ function YetAnotherSCT:LoadUserSettings()
 	incomingCritHealColorAsCColor = self:Hex_To_CColor(self.userSettings.incomingCritHealFontColor)
 end
 
-function YetAnotherSCT:OnYetAnotherSCTOn()
+function YetAnotherSCT:OnYetAnotherSCTOn(cmd, args)
 	self.wndMain = Apollo.LoadForm(self.xmlDoc, "SettingsForm", nil, self)
 	self.wndSettingsList = Apollo.LoadForm(self.xmlDoc, "SettingsList", self.wndMain:FindChild("Window_MainSettings"), self)
+	self.wndGeneralSettings = Apollo.LoadForm(self.xmlDoc,"GeneralSettings",self.wndSettingsList, self)
+	self.wndIncomingDamageSettings = Apollo.LoadForm(self.xmlDoc,"Incoming_DamageSettings",self.wndSettingsList, self)
+	self.wndOutgoingDamageSettings = Apollo.LoadForm(self.xmlDoc,"Outgoing_DamageSettings",self.wndSettingsList, self)
+	self.wndIncomingHealSettings = Apollo.LoadForm(self.xmlDoc,"Incoming_HealSettings",self.wndSettingsList, self)
+	self.wndOutgoingHealSettings = Apollo.LoadForm(self.xmlDoc,"Outgoing_HealSettings",self.wndSettingsList, self)
+	self.wndSettingsList:ArrangeChildrenVert()
+	
 	self:LoadFonts()	
 	self:LoadUserSettings()
 	self.wndMain:Show(true)
+	if args == string.lower("align") then
+		if GameLib.GetPlayerUnit():GetName() == "Thoughtcrime" then 
+			self.wndSettingsList:Show(false)
+			self.wndMain:Show(false)
+		end
+	end
 end
 
 function YetAnotherSCT:LoadFonts()
 	local fonts = Apollo.GetGameFonts()
-	local fontSelectList = self.wndMain:FindChild("ODamageFont_CB")
-	local critFontSelectList = self.wndMain:FindChild("ODamageCritFont_CB")
+	local fontSelectList = self.wndSettingsList:FindChild("ODamageFont_CB")
+	local critFontSelectList = self.wndSettingsList:FindChild("ODamageCritFont_CB")
 	
-	local healFontSelectList = self.wndMain:FindChild("OHealFont_CB")
-	local critHealFontSelectList = self.wndMain:FindChild("OHealCritFont_CB")
+	local healFontSelectList = self.wndSettingsList:FindChild("OHealFont_CB")
+	local critHealFontSelectList = self.wndSettingsList:FindChild("OHealCritFont_CB")
 	
-	local ifontSelectList = self.wndMain:FindChild("IDamageFont_CB")
-	local icritFontSelectList = self.wndMain:FindChild("IDamageCritFont_CB")
+	local ifontSelectList = self.wndSettingsList:FindChild("IDamageFont_CB")
+	local icritFontSelectList = self.wndSettingsList:FindChild("IDamageCritFont_CB")
 
-	local ihealFontSelectList = self.wndMain:FindChild("IHealFont_CB")
-	local icritHealFontSelectList = self.wndMain:FindChild("IHealCritFont_CB")
+	local ihealFontSelectList = self.wndSettingsList:FindChild("IHealFont_CB")
+	local icritHealFontSelectList = self.wndSettingsList:FindChild("IHealCritFont_CB")
 	
-	local ccStateSelectList = self.wndMain:FindChild("CCStateFont_CB")
+	local ccStateSelectList = self.wndSettingsList:FindChild("CCStateFont_CB")
 
 	-- For own define Font Lists
 	--for _, font in pairs(fontList) do
@@ -440,30 +491,30 @@ function YetAnotherSCT:LoadFonts()
 	--Damage
 	critFontSelectList:SelectItemByText(self.userSettings.outgoingCritDamageFont)
 	fontSelectList:SelectItemByText(self.userSettings.outgoingDamageFont)
-	self.wndMain:FindChild("ODCTF"):SetFont(self.userSettings.outgoingCritDamageFont)
-	self.wndMain:FindChild("ODTF"):SetFont(self.userSettings.outgoingDamageFont)
+	self.wndSettingsList:FindChild("ODCTF"):SetFont(self.userSettings.outgoingCritDamageFont)
+	self.wndSettingsList:FindChild("ODTF"):SetFont(self.userSettings.outgoingDamageFont)
 	
 	--Heal
 	critHealFontSelectList:SelectItemByText(self.userSettings.outgoingCritHealFont)
 	healFontSelectList:SelectItemByText(self.userSettings.outgoingHealFont)
-	self.wndMain:FindChild("OHCTF"):SetFont(self.userSettings.outgoingCritHealFont)
-	self.wndMain:FindChild("OHTF"):SetFont(self.userSettings.outgoingHealFont)
+	self.wndSettingsList:FindChild("OHCTF"):SetFont(self.userSettings.outgoingCritHealFont)
+	self.wndSettingsList:FindChild("OHTF"):SetFont(self.userSettings.outgoingHealFont)
 	
 	--Incoming Damage
 	icritFontSelectList:SelectItemByText(self.userSettings.incomingCritDamageFont)
 	ifontSelectList:SelectItemByText(self.userSettings.incomingDamageFont)
-	self.wndMain:FindChild("IDCTF"):SetFont(self.userSettings.incomingCritDamageFont)
-	self.wndMain:FindChild("IDTF"):SetFont(self.userSettings.incomingDamageFont)
+	self.wndSettingsList:FindChild("IDCTF"):SetFont(self.userSettings.incomingCritDamageFont)
+	self.wndSettingsList:FindChild("IDTF"):SetFont(self.userSettings.incomingDamageFont)
 
 	--Incoming Heal
 	icritHealFontSelectList:SelectItemByText(self.userSettings.incomingCritHealFont)
 	ihealFontSelectList:SelectItemByText(self.userSettings.incomingHealFont)
-	self.wndMain:FindChild("IHCTF"):SetFont(self.userSettings.incomingCritHealFont)
-	self.wndMain:FindChild("IHTF"):SetFont(self.userSettings.incomingHealFont)
+	self.wndSettingsList:FindChild("IHCTF"):SetFont(self.userSettings.incomingCritHealFont)
+	self.wndSettingsList:FindChild("IHTF"):SetFont(self.userSettings.incomingHealFont)
 	
 	--General
 	ccStateSelectList:SelectItemByText(self.userSettings.ccStateFont)
-	self.wndMain:FindChild("CCStateTextTF"):SetFont(self.userSettings.ccStateFont)
+	self.wndSettingsList:FindChild("CCStateTextTF"):SetFont(self.userSettings.ccStateFont)
 end
 
 -- END
@@ -1296,6 +1347,7 @@ function YetAnotherSCT:OnDamageOrHealing( unitCaster, unitTarget, eDamageType, n
 
 	local tTextOption = self:GetDefaultTextOption()
 	local tTextOptionAbsorb = self:GetDefaultTextOption()
+	local unitToAttachTo = unitTarget
 
 	if type(nAbsorptionAmount) == "number" and nAbsorptionAmount > 0 then --absorption is its own separate type
 		tTextOptionAbsorb.fScale = 1.0
@@ -1371,6 +1423,7 @@ function YetAnotherSCT:OnDamageOrHealing( unitCaster, unitTarget, eDamageType, n
 end
 
 local sO = tonumber(self.userSettings.splitOutgoing)
+local mO = tonumber(self.userSettings.mergeOutgoing)
 
 
 	if  sO == 1 then
@@ -1379,7 +1432,7 @@ local sO = tonumber(self.userSettings.splitOutgoing)
 		if bHeal == true then 
 
 			--tTextOption.fOffsetDirection = nOffset
-			tTextOption.fOffset = math.random(4, 4)
+			tTextOption.fOffset = math.random(1, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
@@ -1392,9 +1445,9 @@ local sO = tonumber(self.userSettings.splitOutgoing)
 				velocityDirection = 270
 			end
 			
-			else
+		else
 			--tTextOption.fOffsetDirection = nOffset
-			tTextOption.fOffset = math.random(4, 4)
+			tTextOption.fOffset = math.random(1, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			--tTextOption.fOffset = 4 -- GOTCHA: Different
@@ -1410,18 +1463,64 @@ local sO = tonumber(self.userSettings.splitOutgoing)
 		
 		tTextOption.arFrames =
 			{
-			[1] = {fTime = 0,			fAlpha = 0,		fVelocityDirection = velocityDirection,	fVelocityMagnitude = 5,		fScale = fMaxSize * flashSizeMultiplier * 0.5, nColor = nBaseColor },-- Default 0.8},
+			[1] = {fScale = fMaxSize * flashSizeMultiplier * 0.5, nColor = nBaseColor, fTime = 0,			fAlpha = 0,		fVelocityDirection = velocityDirection,	fVelocityMagnitude = 5,	 },-- Default 0.8},
 			[2] = {fTime = 0.15,		fAlpha = 1.0,	fVelocityDirection = velocityDirection,	fVelocityMagnitude = .2, nColor = nBaseColor},
 			[3] = {fTime = 0.5,			fAlpha = 1.0,	fVelocityDirection = velocityDirection,	fVelocityMagnitude = .2},
 			[4] = {fTime = 1.0,	},
 			[5] = {fTime = 1.1,			fAlpha = 1.0,	fVelocityDirection 	= 0,	fVelocityMagnitude 	= 15,},
 			[6] = {fTime = 1.3 + fMaxDuration * 0.1,			fAlpha 	= 0.0,},
 			}
+	elseif mO == 1 then 
+		local iMO = tonumber(self.userSettings.invertMergeOutgoing)
+		local velocityDirection = 0
+		unitToAttachTo = unitCaster
+		if bHeal == true then 
+
+			--tTextOption.fOffsetDirection = nOffset
+			tTextOption.fOffset = math.random(2, 2)
+			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Horizontal
+			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
+			
+			if iMO == 1 then
+				tTextOption.fOffsetDirection = 270
+				velocityDirection = 0
+			else
+				tTextOption.fOffsetDirection = 270
+				velocityDirection = 180
+			end
+			
+		else
+			--tTextOption.fOffsetDirection = nOffset
+			tTextOption.fOffset = math.random(2,2)
+			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Horizontal
+			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			--tTextOption.fOffset = 4 -- GOTCHA: Different
+
+			if iMO == 1 then
+				tTextOption.fOffsetDirection = 270
+				velocityDirection = 0
+			else
+				tTextOption.fOffsetDirection = 270
+				velocityDirection = 180
+			end
+		end
+		
+		tTextOption.arFrames =
+			{
+			[1] = {fScale = fMaxSize * flashSizeMultiplier * 0.5, nColor = nBaseColor, fTime = 0,			fAlpha = 0,		fVelocityDirection = velocityDirection,	fVelocityMagnitude = 5, },-- Default 0.8},
+			[2] = {fTime = 0.15,		fAlpha = 1.0,	fVelocityDirection = velocityDirection,	fVelocityMagnitude = .2, nColor = nBaseColor},
+			[3] = {fTime = 0.5,			fAlpha = 1.0,	fVelocityDirection = velocityDirection,	fVelocityMagnitude = .2},
+			[4] = {fTime = 1.0,	},
+			[5] = {fTime = 1.1,			fAlpha = 1.0,	fVelocityDirection 	= velocityDirection,	fVelocityMagnitude 	= 15,},
+			[6] = {fTime = 1.3 + fMaxDuration * 0.1,			fAlpha 	= 0.0,},
+			}
+
 	else
 		-- determine offset direction; re-randomize if too close to the last
-		local nOffset = math.random(0, 0)
+		local nOffset = math.random(0, 0)  -- disabled randomization of offset by setting min/max to 0,0
 		if nOffset <= (self.fLastOffset + 75) and nOffset >= (self.fLastOffset - 75) then
-			nOffset = math.random(0, 0)
+			nOffset = math.random(0, 0)  -- disabled randomization of offset by setting min/max to 0,0
 		end
 		self.fLastOffset = nOffset
 
@@ -1433,8 +1532,8 @@ local sO = tonumber(self.userSettings.splitOutgoing)
 		-- scale and movement
 		nStallTime = .4
 		tTextOption.arFrames =
-{
-		[1] = {fScale = fMaxSize * flashSizeMultiplier,	fTime = 0,											nColor = nHighlightColor,	fVelocityDirection = 0,		fVelocityMagnitude = 0,},
+		{
+		[1] = {fScale = fMaxSize * flashSizeMultiplier * .5,	fTime = 0,											nColor = nHighlightColor,	fVelocityDirection = 0,		fVelocityMagnitude = 0,},
 		[2] = {fScale = fMaxSize * 1.5,					fTime = 0.1,										nColor = nHighlightColor,	fVelocityDirection = 0,		fVelocityMagnitude = .5,},
 		[3] = {fScale = fMaxSize,						fTime = 0.3,					fAlpha = 1.0,		nColor = nBaseColor,		fVelocityDirection = 0,		fVelocityMagnitude = 2,},
 		[4] = {											fTime = 0.5 + nStallTime,		fAlpha = .75,									fVelocityDirection = 0,		fVelocityMagnitude = 5,},
@@ -1463,9 +1562,9 @@ local sO = tonumber(self.userSettings.splitOutgoing)
 			end
 		end
 	elseif bHeal then
-		CombatFloater.ShowTextFloater( unitTarget, "+"..nTotalDamage, tTextOption ) -- we show "0" when there's no absorption ,String_GetWeaselString(Apollo.GetString("FloatText_PlusValue") ,nTotalDamage)
+		CombatFloater.ShowTextFloater( unitToAttachTo, "+"..nTotalDamage, tTextOption ) -- we show "0" when there's no absorption ,String_GetWeaselString(Apollo.GetString("FloatText_PlusValue") ,nTotalDamage)
 	else
-		CombatFloater.ShowTextFloater( unitTarget, nTotalDamage, tTextOption )		 
+		CombatFloater.ShowTextFloater( unitToAttachTo, nTotalDamage, tTextOption )		 
 	end
 end
 
@@ -1537,7 +1636,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 	local fOffsetAmount = 0
 	local fMaxDuration = .55
 	local eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Horizontal
-	local flashSizeMultiplier = 0.75
+	local flashSizeMultiplier = 1.75
 	
 
 	local newDamage = nDamage
@@ -1597,6 +1696,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 	end
 
 	local sI = tonumber(self.userSettings.splitIncoming)
+	local mI = tonumber(self.userSettings.mergeIncoming)
 
 	if  sI == 1 then
 		local velocityDirection = 0
@@ -1604,7 +1704,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 		if bHeal == true then 
 
 			--tTextOption.fOffsetDirection = nOffset
-			tTextOption.fOffset = math.random(2, 6)--/100
+			tTextOption.fOffset = math.random(1, 1)--/100
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
@@ -1618,7 +1718,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			
 			else
 			--tTextOption.fOffsetDirection = nOffset
-			tTextOption.fOffset = math.random(2, 6)--/100
+			tTextOption.fOffset = math.random(1, 1)--/100
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
@@ -1630,16 +1730,51 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 				velocityDirection = 90
 			end
 		end
-	
+	elseif mI == 1 then 
+		local velocityDirection = 0
+		local iMI = tonumber(self.userSettings.invertMergeIncoming)
+		if bHeal == true then 
+
+			--tTextOption.fOffsetDirection = nOffset
+			tTextOption.fOffset = math.random(2, 2)
+			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Horizontal
+			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
+			
+			if iMI == 1 then
+				tTextOption.fOffsetDirection = 90
+				velocityDirection = 0
+			else
+				tTextOption.fOffsetDirection = 90
+				velocityDirection = 180
+			end
+			
+		else
+			--tTextOption.fOffsetDirection = nOffset
+			tTextOption.fOffset = math.random(2, 2)
+			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Horizontal
+			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			--tTextOption.fOffset = 4 -- GOTCHA: Different
+
+			if iMI == 1 then
+				tTextOption.fOffsetDirection = 90
+				velocityDirection = 0
+			else
+				tTextOption.fOffsetDirection = 90
+				velocityDirection = 180
+			end
+		end
+		
 		tTextOption.arFrames =
 			{
-			[1] = {fTime = 0,			fAlpha = 0,		fVelocityDirection = velocityDirection,	fVelocityMagnitude = 5,		fScale = fMaxSize * flashSizeMultiplier, nColor = nBaseColor },-- Default 0.8},
+			[1] = {fScale = fMaxSize * flashSizeMultiplier * 0.5, nColor = nBaseColor, fTime = 0,			fAlpha = 0,		fVelocityDirection = velocityDirection,	fVelocityMagnitude = 5,},-- Default 0.8},
 			[2] = {fTime = 0.15,		fAlpha = 1.0,	fVelocityDirection = velocityDirection,	fVelocityMagnitude = .2, nColor = nBaseColor},
 			[3] = {fTime = 0.5,			fAlpha = 1.0,	fVelocityDirection = velocityDirection,	fVelocityMagnitude = .2},
 			[4] = {fTime = 1.0,	},
-			[5] = {fTime = 1.1,			fAlpha = 1.0,	fVelocityDirection 	= 180,	fVelocityMagnitude 	= 15,},
-			[6] = {fTime = 1.3 + fMaxDuration * 0.5,			fAlpha 	= 0.0,},
+			[5] = {fTime = 1.1,			fAlpha = 1.0,	fVelocityDirection 	= velocityDirection,	fVelocityMagnitude 	= 15,},
+			[6] = {fTime = 1.3 + fMaxDuration * 0.1,			fAlpha 	= 0.0,},
 			}
+
 	else
 		tTextOptionAbsorb.fOffset = fOffsetAmount
 		tTextOption.eCollisionMode = eCollisionMode
@@ -2205,6 +2340,22 @@ function YetAnotherSCT:SplitOutgoingUnCheck( wndHandler, wndControl, eMouseButto
 	self.userSettings.splitOutgoing = 0
 end
 
+function YetAnotherSCT:MergeIncomingCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.mergeIncoming = 1
+end
+
+function YetAnotherSCT:MergeIncomingUnCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.mergeIncoming = 0
+end
+
+function YetAnotherSCT:MergeOutgoingCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.mergeOutgoing = 1
+end
+
+function YetAnotherSCT:MergeOutgoingUnCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.mergeOutgoing = 0
+end
+
 function YetAnotherSCT:HideSpellCastCheck( wndHandler, wndControl, eMouseButton )
 	self.userSettings.hideSpellCastFail = 1
 end
@@ -2259,6 +2410,22 @@ end
 
 function YetAnotherSCT:OnSwapOutgoingUnCheck( wndHandler, wndControl, eMouseButton )
 	self.userSettings.swapOutgoing = 0
+end
+
+function YetAnotherSCT:OnInvertMergeIncomingCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.invertMergeIncoming = 1
+end
+
+function YetAnotherSCT:OnInvertMergeIncomingUnCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.invertMergeIncoming = 0
+end
+
+function YetAnotherSCT:OnInvertMergeOutgoingCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.invertMergeOutgoing = 1
+end
+
+function YetAnotherSCT:OnInvertMergeOutgoingUnCheck( wndHandler, wndControl, eMouseButton )
+	self.userSettings.invertMergeOutgoing = 0
 end
 
 function YetAnotherSCT:OnDisableOutgoingShieldDamageCheck( wndHandler, wndControl, eMouseButton )

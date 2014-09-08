@@ -4,6 +4,7 @@
     <Form Name="TestFloatTextForms.xml"/>
     <Form Name="FloatTextPanel.xml"/>
     <Form Name="OptionsForm.xml"/>
+    <Form Name="YASCTCustomizationAssist.xml"/>
     <ReplaceAddon Name="FloatText"/>
     <ReplaceAddon Name="FloatTextPanel"/>
 </Addon>
