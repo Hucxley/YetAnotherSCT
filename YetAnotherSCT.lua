@@ -110,8 +110,67 @@ local YetAnotherSCT = {
 		incomingCritHealFontColor = "c6ff94",
 		incomingCritHealFlash = 0.75,
 		incomingHealFlashColor = "ffffff",
+
+	--Player CC status
+	arCCFormatPlayer =
+    --Removing an entry from this table means no floater is shown for that state.
+	{
+		[Unit.CodeEnumCCState.Stun] 				= 0xff2b2b,
+		[Unit.CodeEnumCCState.Sleep] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Root] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Disarm] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Silence] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Polymorph] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Fear] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Hold] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Knockdown] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Disorient] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Disable] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Taunt] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.DeTaunt] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Blind] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Knockback] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Pushback] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Pull] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.PositionSwitch] 	= 0xff2b2b,
+		[Unit.CodeEnumCCState.Tether] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Snare] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Interrupt] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Daze] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Subdue] 			= 0xff2b2b,
+	},
+
+	--Enemy CC Status
+	arCCFormat =  --Removing an entry from this table means no floater is shown for that state.
+	{
+		[Unit.CodeEnumCCState.Stun] 			= 0xffe691, -- stun
+		[Unit.CodeEnumCCState.Sleep] 			= 0xffe691, -- sleep
+		[Unit.CodeEnumCCState.Root] 			= 0xffe691, -- root
+		[Unit.CodeEnumCCState.Disarm] 			= 0xffe691, -- disarm
+		[Unit.CodeEnumCCState.Silence] 			= 0xffe691, -- silence
+		[Unit.CodeEnumCCState.Polymorph] 		= 0xffe691, -- polymorph
+		[Unit.CodeEnumCCState.Fear] 			= 0xffe691, -- fear
+		[Unit.CodeEnumCCState.Hold] 			= 0xffe691, -- hold
+		[Unit.CodeEnumCCState.Knockdown] 		= 0xffe691, -- knockdown
+		[Unit.CodeEnumCCState.Disorient] 		= 0xffe691,
+		[Unit.CodeEnumCCState.Disable] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Taunt] 			= 0xffe691,
+		[Unit.CodeEnumCCState.DeTaunt] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Blind] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Knockback] 		= 0xffe691,
+		[Unit.CodeEnumCCState.Pushback ] 		= 0xffe691,
+		[Unit.CodeEnumCCState.Pull] 			= 0xffe691,
+		[Unit.CodeEnumCCState.PositionSwitch] 	= 0xffe691,
+		[Unit.CodeEnumCCState.Tether] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Snare] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Interrupt] 		= 0xffe691,
+		[Unit.CodeEnumCCState.Daze] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Subdue] 			= 0xffe691,
+	},
 	},
 }
+SendVarToRover("YASCT defaults", YetAnotherSCT.userSettings)
+
 
 local outgoingCritColorAsCColor = CColor.new(1, 1, 1, 1)
 local outgoingDamageColorAsCColor = CColor.new(1, 1, 1, 1)
@@ -251,6 +310,61 @@ function YetAnotherSCT:DefaultSettings()
 	self.userSettings.ccStateEnemyFontSize = 1
 	self.userSettings.ccStatePlayerFontDuration = 2
 	self.userSettings.ccStateEnemyFontDuration = 2
+	self.userSettings.arCCFormat =  --Removing an entry from this table means no floater is shown for that state.
+	{
+		[Unit.CodeEnumCCState.Stun] 			= 0xffe691, -- stun
+		[Unit.CodeEnumCCState.Sleep] 			= 0xffe691, -- sleep
+		[Unit.CodeEnumCCState.Root] 			= 0xffe691, -- root
+		[Unit.CodeEnumCCState.Disarm] 			= 0xffe691, -- disarm
+		[Unit.CodeEnumCCState.Silence] 			= 0xffe691, -- silence
+		[Unit.CodeEnumCCState.Polymorph] 		= 0xffe691, -- polymorph
+		[Unit.CodeEnumCCState.Fear] 			= 0xffe691, -- fear
+		[Unit.CodeEnumCCState.Hold] 			= 0xffe691, -- hold
+		[Unit.CodeEnumCCState.Knockdown] 		= 0xffe691, -- knockdown
+		[Unit.CodeEnumCCState.Disorient] 		= 0xffe691,
+		[Unit.CodeEnumCCState.Disable] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Taunt] 			= 0xffe691,
+		[Unit.CodeEnumCCState.DeTaunt] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Blind] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Knockback] 		= 0xffe691,
+		[Unit.CodeEnumCCState.Pushback ] 		= 0xffe691,
+		[Unit.CodeEnumCCState.Pull] 			= 0xffe691,
+		[Unit.CodeEnumCCState.PositionSwitch] 	= 0xffe691,
+		[Unit.CodeEnumCCState.Tether] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Snare] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Interrupt] 		= 0xffe691,
+		[Unit.CodeEnumCCState.Daze] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Subdue] 			= 0xffe691,
+	}
+	self.userSettings.arCCFormatPlayer =
+    --Removing an entry from this table means no floater is shown for that state.
+	{
+		[Unit.CodeEnumCCState.Stun] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Sleep] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Root] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Disarm] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Silence] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Polymorph] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Fear] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Hold] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Knockdown] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Disorient] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Disable] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Taunt] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.DeTaunt] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Blind] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Knockback] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Pushback] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Pull] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.PositionSwitch] 	= 0xff2b2b,
+		[Unit.CodeEnumCCState.Tether] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Snare] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Interrupt] 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Daze] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Subdue] 			= 0xff2b2b,
+	}
+
+	-- Set General Settings
 	self.userSettings.splitIncoming = 0
 	self.userSettings.swapIncoming = 0
 	self.userSettings.mergeIncoming = 0
@@ -261,9 +375,11 @@ function YetAnotherSCT:DefaultSettings()
 	self.userSettings.CriticalHitMarker = "*"
 	self.userSettings.invertMergeIncoming = 0
 	self.userSettings.invertMergeOutgoing = 0
-	self.userSettings.sCombatTextAnchor = CombatFloater.CodeEnumFloaterLocation.Head
+	self.userSettings.sCombatTextAnchor = CombatFloater.CodeEnumFloaterLocation.Top
 
 	--TODO SetDefaultValues
+	SendVarToRover("Default EnemyCC Format", self.userSettings.arCCFormat)
+	SendVarToRover("Default Player CC Format", self.userSettings.arCCFormatPlayer)
 	self:LoadUserSettings()
 end
 
@@ -271,6 +387,9 @@ end
 
 function YetAnotherSCT:LoadUserSettings()
 	-- Load Values
+
+	SendVarToRover("User EnemyCC Format", self.userSettings.arCCFormat)
+	SendVarToRover("User Player CC Format", self.userSettings.arCCFormatPlayer)
 	--General Settings
 	self.wndMain:FindChild("CCStatePlayerTextSize"):SetText(self.userSettings.ccStatePlayerFontSize)
 	self.wndMain:FindChild("CCStateEnemyTextSize"):SetText(self.userSettings.ccStateEnemyFontSize)
@@ -340,7 +459,29 @@ function YetAnotherSCT:LoadUserSettings()
 	else 
 	 	self.wndMain:FindChild("InvertMergedOutgoing"):SetCheck(true)
 	end
-	
+
+	local tParentText = {}
+	for i = 1, 23, 1 do
+		local wndParent = self.wndCCDisplaySettings:FindChild(tostring("CCHeader"..i))
+		local ParentText = wndParent:GetText()
+		local btnPlayerOption = wndParent:FindChild("PlayerCCHide")
+		local btnEnemyOption = wndParent:FindChild("EnemyCCHide")
+		if self.userSettings.arCCFormat[Unit.CodeEnumCCState[wndParent:GetText()]] == nil then
+			btnEnemyOption:SetCheck(true)
+		else
+			btnEnemyOption:SetCheck(false)
+		end
+		if self.userSettings.arCCFormatPlayer[Unit.CodeEnumCCState[wndParent:GetText()]] == nil then
+			btnPlayerOption:SetCheck(true)
+		else
+			btnPlayerOption:SetCheck(false)
+		end
+			SendVarToRover("ParentText",tParentText)
+	end
+
+
+
+
 	ccStatePlayerColorAsCColor = self:Hex_To_CColor(self.userSettings.ccStatePlayerFontColor)
 	ccStateEnemyColorAsCColor = self:Hex_To_CColor(self.userSettings.ccStateEnemyFontColor)
 	self.wndMain:FindChild("label_102"):SetTextColor("ff"..self.userSettings.ccStatePlayerFontColor)
@@ -450,12 +591,15 @@ function YetAnotherSCT:OnYetAnotherSCTOn(cmd, args)
 	self.wndOutgoingDamageSettings = Apollo.LoadForm(self.xmlDoc,"Outgoing_DamageSettings",self.wndMain:FindChild("Window_MainSettings"), self)
 	self.wndIncomingHealSettings = Apollo.LoadForm(self.xmlDoc,"Incoming_HealSettings",self.wndMain:FindChild("Window_MainSettings"), self)
 	self.wndOutgoingHealSettings = Apollo.LoadForm(self.xmlDoc,"Outgoing_HealSettings",self.wndMain:FindChild("Window_MainSettings"), self)
+	self.wndCCDisplaySettings = Apollo.LoadForm(self.xmlDoc,"CCDisplaySettings",self.wndMain:FindChild("Window_MainSettings"), self)
 	self.wndMain:FindChild("Window_MainSettings"):RecalculateContentExtents()
 	self.wndMain:FindChild("Window_MainSettings"):ArrangeChildrenVert()
 	
 	self:LoadFonts()	
 	self:LoadAnimationShapes()
 	self:LoadUserSettings()
+	SendVarToRover("arCCFormat Loaded", self.userSettings.arCCFormat)
+	SendVarToRover("arCCFormatPlayer Loaded", self.userSettings.arCCFormatPlayer)
 	self.wndMain:Show(true)
 	if args == string.lower("align") then
 		if GameLib.GetPlayerUnit():GetName() == "Thoughtcrime" then 
@@ -535,7 +679,7 @@ function YetAnotherSCT:LoadFonts()
 end
 
 	function YetAnotherSCT:LoadAnimationShapes()
-	local AnimationShapes = {shape = "Default","Default","Doesn't Work, So Stop Trying", "Still Won't Work", "Coming Soon",}
+	local AnimationShapes = {shape = "Default","Arc","Doesn't Work, So Stop Trying", "Still Won't Work", "Coming Soon",}
 	local iDAnimationShapeSelectList = self.wndSettingsList:FindChild("IDamageShape_CB")
 	--local critFontSelectList = self.wndSettingsList:FindChild("ODamageCritFont_CB")
 	
@@ -702,9 +846,9 @@ function YetAnotherSCT:GetDefaultTextOption()
 		nColor 						= 0xFFFFFF,
 		iUseDigitSpriteSet 			= nil,
 		bUseScreenPos 				= false,
-		bShowOnTop 					= false,
+		bShowOnTop 					= true,
 		fRotation 					= 0,
-		fDelay 						= 0,
+		fDelay 						= 1,
 		nDigitSpriteSpacing 		= 0,
 	}
 	return tTextOption
@@ -1564,7 +1708,7 @@ local mO = tonumber(self.userSettings.mergeOutgoing)
 		if bHeal == true then 
 
 			--tTextOption.fOffsetDirection = nOffset
-			tTextOption.fOffset = math.random(1, 2)
+			tTextOption.fOffset = math.random(0, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
@@ -1579,7 +1723,7 @@ local mO = tonumber(self.userSettings.mergeOutgoing)
 			
 		else
 			--tTextOption.fOffsetDirection = nOffset
-			tTextOption.fOffset = math.random(1, 2)
+			tTextOption.fOffset = math.random(0, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			--tTextOption.fOffset = 4 -- GOTCHA: Different
@@ -1651,7 +1795,7 @@ local mO = tonumber(self.userSettings.mergeOutgoing)
 	elseif bHeal then
 		CombatFloater.ShowTextFloater( unitToAttachTo, "+"..nTotalDamage, tTextOption ) -- we show "0" when there's no absorption ,String_GetWeaselString(Apollo.GetString("FloatText_PlusValue") ,nTotalDamage)
 	else
-		CombatFloater.ShowTextFloater( unitToAttachTo, nTotalDamage, tTextOption )		 
+		CombatFloater.ShowTextFloater( unitToAttachTo, nTotalDamage, tTextOption )	
 	end
 end
 
@@ -1823,7 +1967,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 		if bHeal == true then 
 
 			--tTextOption.fOffsetDirection = nOffset
-			tTextOption.fOffset = math.random(1, 2)
+			tTextOption.fOffset = math.random(0, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
@@ -1838,7 +1982,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			
 		else
 			--tTextOption.fOffsetDirection = nOffset
-			tTextOption.fOffset = math.random(1, 2)
+			tTextOption.fOffset = math.random(0, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			--tTextOption.fOffset = 4 -- GOTCHA: Different
@@ -1868,8 +2012,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 		tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 
 		-- scale and movement
-		tTextOption.arFrames = self:IncomingDamageAnimationShapes(tTextOption, self.userSettings.incomingDamageAnimationShape, nBaseColor, nHighlightColor,fMaxSize,
-																					nOffsetDirection,fOffsetAmount,fMaxDuration,eCollisionMode,flashSizeMultiplier,nStallTime)
+		tTextOption.arFrames = self:IncomingDamageAnimationShapes(tTextOption, self.userSettings.incomingDamageAnimationShape, nBaseColor, nHighlightColor,fMaxSize,nOffsetDirection,fOffsetAmount,fMaxDuration,eCollisionMode,flashSizeMultiplier,nStallTime)
 		--[[
 		tTextOption.arFrames =
 		{
@@ -1914,7 +2057,8 @@ function YetAnotherSCT:OnCombatLogCCState(tEventArgs)
 		return
 	end
 
-	local arCCFormat =  --Removing an entry from this table means no floater is shown for that state.
+	local arCCFormat =  self.userSettings.arCCFormat--Removing an entry from this table means no floater is shown for that state.
+	--[[
 	{
 		[Unit.CodeEnumCCState.Stun] 			= 0xffe691, -- stun
 		[Unit.CodeEnumCCState.Sleep] 			= 0xffe691, -- sleep
@@ -1940,6 +2084,7 @@ function YetAnotherSCT:OnCombatLogCCState(tEventArgs)
 		[Unit.CodeEnumCCState.Daze] 			= 0xffe691,
 		[Unit.CodeEnumCCState.Subdue] 			= 0xffe691,
 	}
+	]]--
 
 	local tTextOption = self:GetDefaultTextOption()
 	local strMessage = ""
@@ -1997,7 +2142,8 @@ function YetAnotherSCT:OnCombatLogCCState(tEventArgs)
 			[5] = {						fTime = 1.3 + fMaxDuration,	fAlpha = 0.0,							fVelocityDirection = 0,},
 		}
 	end
-
+	SendVarToRover("CCApplied", arCCFormat)
+	SendVarToRover("CCEventArgs", tEventArgs)
 	CombatFloater.ShowTextFloater( tEventArgs.unitTarget, strMessage, tTextOption )
 end
 
@@ -2012,9 +2158,10 @@ function YetAnotherSCT:OnCombatLogCCStatePlayer(tEventArgs)
 		return
 	end
 
-	local arCCFormatPlayer =
+	local arCCFormatPlayer = self.userSettings.arCCFormatPlayer
     --Removing an entry from this table means no floater is shown for that state.
-	{
+	--[[
+		{
 		[Unit.CodeEnumCCState.Stun] 			= 0xff2b2b,
 		[Unit.CodeEnumCCState.Sleep] 			= 0xff2b2b,
 		[Unit.CodeEnumCCState.Root] 			= 0xff2b2b,
@@ -2038,7 +2185,8 @@ function YetAnotherSCT:OnCombatLogCCStatePlayer(tEventArgs)
 		[Unit.CodeEnumCCState.Interrupt] 		= 0xff2b2b,
 		[Unit.CodeEnumCCState.Daze] 			= 0xff2b2b,
 		[Unit.CodeEnumCCState.Subdue] 			= 0xff2b2b,
-	}
+		}
+		]]--
 
 	local nOffsetState = tEventArgs.eState
 
@@ -2146,6 +2294,7 @@ end
 function YetAnotherSCT:OnDelayedFloatTextTimer()
 	local tParams = self.tDelayedFloatTextQueue:Pop()
 	Event_FireGenericEvent("Float_RequestShowTextFloater", tParams.eMessageType, tParams, tParams.tContent) -- TODO: Event!!!!
+	SendVarToRover("DelayedFloatText Params",tParams)
 end
 
 ---------------------------------------------------------------------------------------------------
@@ -2207,7 +2356,7 @@ function YetAnotherSCT:Button_Ok( wndHandler, wndControl, eMouseButton )
 	self.userSettings.ccStatePlayerFontColor = self:HSV_To_Hex(ccStatePlayerColorAsCColor)
 	self.userSettings.ccStateEnemyFontColor = self:HSV_To_Hex(ccStateEnemyColorAsCColor)
 	self.userSettings.CriticalHitMarker = self.wndMain:FindChild("CriticalHitMarker"):GetText()
-	
+
 	isShown = 0
 end
 
@@ -2221,8 +2370,10 @@ end
 ---------------------------------------------------------------------------------------------------
 
 function YetAnotherSCT:IncomingDamageAnimationShapes(tTextOption,shape,nBaseColor,nHighlightColor,fMaxSize,nOffsetDirection,fOffsetAmount,fMaxDuration,eCollisionMode,flashSizeMultiplier,nStallTime)
-	if shape == "Default" then
+		SendVarToRover("shape",shape)
+		SendVarToRover("tTextOption",tTextOption)
 
+	if shape == "Default" then
 		tTextOption.arFrames =
 		{
 		[1] = {fScale = fMaxSize * flashSizeMultiplier,	fTime = 0,											nColor = nHighlightColor,	fVelocityDirection = 180,		fVelocityMagnitude = 0,},
@@ -2231,8 +2382,28 @@ function YetAnotherSCT:IncomingDamageAnimationShapes(tTextOption,shape,nBaseColo
 		[4] = {											fTime = 0.3 + nStallTime,		fAlpha = 1.0,									fVelocityDirection = 180,		fVelocityMagnitude = 3,},
 		[5] = {											fTime = 0.65 + fMaxDuration,	fAlpha = 0.2,									fVelocityDirection = 180,},
 		}
+	elseif shape == "Arc" then
+		fMaxDuration = 1
+		nStallTime = .75
+		tTextOption.arFrames =
+		{
+		[1] = {fScale = fMaxSize * flashSizeMultiplier,	fTime = 1,									nColor = nHighlightColor,	fVelocityDirection = 0,		fVelocityMagnitude = 2,},
+		[2] = {fScale = fMaxSize * 1.5,					fTime = 1,										nColor = nHighlightColor,	fVelocityDirection = 15,		fVelocityMagnitude = 2,},
+		[3] = {fScale = fMaxSize,							fTime = 1,					fAlpha = 1.0,	nColor = nBaseColor,			fVelocityDirection = 30,		fVelocityMagnitude = 2,},
+		[4] = {fScale = fMaxSize,							fTime = 1,					fAlpha = 1.0,	nColor = nBaseColor,			fVelocityDirection = 45,		fVelocityMagnitude = 2,},
+		[5] = {fScale = fMaxSize,							fTime = 1,					fAlpha = 1.0,	nColor = nBaseColor,			fVelocityDirection = 60,		fVelocityMagnitude = 2,},
+		[6] = {fScale = fMaxSize,							fTime = 1,					fAlpha = 1.0,	nColor = nBaseColor,			fVelocityDirection = 75,		fVelocityMagnitude = 2,},
+		[7] = {fScale = fMaxSize,							fTime = 1,					fAlpha = 1.0,	nColor = nBaseColor,			fVelocityDirection = 90,		fVelocityMagnitude = 2,},
+		[8] = {fScale = fMaxSize,							fTime = 1,					fAlpha = 1.0,	nColor = nBaseColor,			fVelocityDirection = 105,		fVelocityMagnitude = 2,},
+		[9] = {fScale = fMaxSize,							fTime = 1,					fAlpha = 1.0,	nColor = nBaseColor,			fVelocityDirection = 120,		fVelocityMagnitude = 2,},
+		[10] = {fScale = fMaxSize,							fTime = 1,					fAlpha = 1.0,	nColor = nBaseColor,			fVelocityDirection = 135,		fVelocityMagnitude = 2,},
+		[11] = {													fTime = 1,					fAlpha = 1.0,										fVelocityDirection = 150,		fVelocityMagnitude = 3,},
+		[12] = {													fTime = 1,				fAlpha =	.5,										fVelocityDirection = 165,},
+		[12] = {													fTime = 5,				fAlpha = 0.2,										fVelocityDirection = 180,},
+		}
+
 	else
-		velocityDirection = 270
+		local velocityDirection = 270
 		tTextOption.arFrames =
 		{
 		[1] = {fScale = fMaxSize * flashSizeMultiplier, nColor = nBaseColor, fTime = 0,			fAlpha = 0,		fVelocityDirection = velocityDirection,	fVelocityMagnitude = 5,},-- Default 0.8},
@@ -2242,8 +2413,9 @@ function YetAnotherSCT:IncomingDamageAnimationShapes(tTextOption,shape,nBaseColo
 		[5] = {fTime = 1.1,			fAlpha = 1.0,	fVelocityDirection 	= velocityDirection,	fVelocityMagnitude 	= 15,},
 		[6] = {fTime = 1.3 + fMaxDuration * 0.1,			fAlpha 	= 0.0,},
 		}
-		return tTextOption.arFrames
 	end
+	return tTextOption.arFrames
+	
 end
 
 ---------------------------------------------------------------------------------------------------
@@ -2576,6 +2748,47 @@ end
 
 function YetAnotherSCT:OnDisableIncomingShieldDamageUnCheck( wndHandler, wndControl, eMouseButton )
 	self.userSettings.incomingShieldDamageDisable = 0
+end
+
+function YetAnotherSCT:OnPlayerCCButtonCheck (wndHandler, wndControl, eMouseButton)
+	local wnd = wndControl
+	local ccName = wnd:GetParent():GetText()
+	self.userSettings.arCCFormatPlayer[Unit.CodeEnumCCState[ccName]] = nil
+	wnd:SetData("Hidden")
+
+end
+
+function YetAnotherSCT:OnPlayerCCButtonUncheck (wndHandler, wndControl, eMouseButton)
+	local wnd = wndControl
+	local ccName = wnd:GetParent():GetText()
+	local color = self.wndMain:FindChild("GeneralSettings"):FindChild("label_102"):GetTextColor()
+	Print(ccName)
+	self.userSettings.arCCFormatPlayer[Unit.CodeEnumCCState[ccName]] = color
+	wnd:SetData("Shown")
+
+end
+
+function YetAnotherSCT:OnEnemyCCButtonCheck (wndHandler, wndControl, eMouseButton)
+	local wnd = wndControl
+	local ccName = wnd:GetParent():GetText()
+	Print(ccName)
+	Print(Unit.CodeEnumCCState[ccName])
+	self.userSettings.arCCFormat[Unit.CodeEnumCCState[ccName]] = nil
+	wnd:SetData("Hidden")
+
+
+end
+
+function YetAnotherSCT:OnEnemyCCButtonUnCheck (wndHandler, wndControl, eMouseButton)
+	Print("Bacon")
+	local wnd = wndControl
+	local ccName = wnd:GetParent():GetText()
+	Print(ccName)
+	Print(Unit.CodeEnumCCState[ccName])
+	local color = self.wndMain:FindChild("GeneralSettings"):FindChild("label_103"):GetTextColor()
+	self.userSettings.arCCFormat[Unit.CodeEnumCCState[ccName]] = color
+	wnd:SetData("Shown")
+
 end
 
 ---------------------------------------------------------------------------------------------------
