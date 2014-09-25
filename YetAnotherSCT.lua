@@ -2100,12 +2100,12 @@ function YetAnotherSCT:OnCombatLogCCState(tEventArgs)
 	local fMaxDuration = self.userSettings.ccStateEnemyFontDuration
 	tTextOption.arFrames={}
 	
-	local bUseCCFormat = false -- use CC formatting vs. message formatting
+	local bUseCCFormat = true -- use CC formatting vs. message formatting
 
 	if tEventArgs.eResult == CombatFloater.CodeEnumCCStateApplyRulesResult.Ok then -- CC applied
 		strMessage = tEventArgs.strState
 		if arCCFormat[nOffsetState] ~= nil then -- make sure it's one we want to show
-			bUseCCFormat = true
+			bUseCCFormat = false
 		else
 			return
 		end
@@ -2209,7 +2209,7 @@ function YetAnotherSCT:OnCombatLogCCStatePlayer(tEventArgs)
 	if tEventArgs.eResult == CombatFloater.CodeEnumCCStateApplyRulesResult.Ok then -- CC applied
 		strMessage = tEventArgs.strState
 		if arCCFormatPlayer[nOffsetState] ~= nil then -- make sure it's one we want to show
-			bUseCCFormat = true
+			bUseCCFormat = false
 		else
 			return
 		end
@@ -2761,8 +2761,7 @@ end
 function YetAnotherSCT:OnPlayerCCButtonUncheck (wndHandler, wndControl, eMouseButton)
 	local wnd = wndControl
 	local ccName = wnd:GetParent():GetText()
-	local color = self.wndMain:FindChild("GeneralSettings"):FindChild("label_102"):GetTextColor()
-	Print(ccName)
+	local color = "0x"..self.userSettings.ccStatePlayerFontColor
 	self.userSettings.arCCFormatPlayer[Unit.CodeEnumCCState[ccName]] = color
 	wnd:SetData("Shown")
 
@@ -2771,21 +2770,16 @@ end
 function YetAnotherSCT:OnEnemyCCButtonCheck (wndHandler, wndControl, eMouseButton)
 	local wnd = wndControl
 	local ccName = wnd:GetParent():GetText()
-	Print(ccName)
-	Print(Unit.CodeEnumCCState[ccName])
 	self.userSettings.arCCFormat[Unit.CodeEnumCCState[ccName]] = nil
 	wnd:SetData("Hidden")
 
 
 end
 
-function YetAnotherSCT:OnEnemyCCButtonUnCheck (wndHandler, wndControl, eMouseButton)
-	Print("Bacon")
+function YetAnotherSCT:OnEnemyCCButtonUncheck (wndHandler, wndControl, eMouseButton)
 	local wnd = wndControl
 	local ccName = wnd:GetParent():GetText()
-	Print(ccName)
-	Print(Unit.CodeEnumCCState[ccName])
-	local color = self.wndMain:FindChild("GeneralSettings"):FindChild("label_103"):GetTextColor()
+	local color = "0x"..self.userSettings.ccStateEnemyFontColor
 	self.userSettings.arCCFormat[Unit.CodeEnumCCState[ccName]] = color
 	wnd:SetData("Shown")
 
