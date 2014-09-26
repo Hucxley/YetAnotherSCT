@@ -1,6 +1,9 @@
 -----------------------------------------------------------------------------------------------
 -- Client Lua Script for FloatTextPanel
 -- Copyright (c) NCsoft. All rights reserved
+-- Copyright of any code modified from the base code owned by NCSOFT is held by Thoughtcrime.
+-- All rights reserved, and you may not use any portion of the modified code without express
+-- permission.  Please contact me through Curse.com or Curseforge.com to disucss usage.
 -----------------------------------------------------------------------------------------------
 
 require "Window"
