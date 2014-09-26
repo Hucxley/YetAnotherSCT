@@ -169,7 +169,7 @@ local YetAnotherSCT = {
 	},
 	},
 }
-SendVarToRover("YASCT defaults", YetAnotherSCT.userSettings)
+--SendVarToRover("YASCT defaults", YetAnotherSCT.userSettings)
 
 
 local outgoingCritColorAsCColor = CColor.new(1, 1, 1, 1)
@@ -378,8 +378,8 @@ function YetAnotherSCT:DefaultSettings()
 	self.userSettings.sCombatTextAnchor = CombatFloater.CodeEnumFloaterLocation.Top
 
 	--TODO SetDefaultValues
-	SendVarToRover("Default EnemyCC Format", self.userSettings.arCCFormat)
-	SendVarToRover("Default Player CC Format", self.userSettings.arCCFormatPlayer)
+	--SendVarToRover("Default EnemyCC Format", self.userSettings.arCCFormat)
+	--SendVarToRover("Default Player CC Format", self.userSettings.arCCFormatPlayer)
 	self:LoadUserSettings()
 end
 
@@ -388,8 +388,8 @@ end
 function YetAnotherSCT:LoadUserSettings()
 	-- Load Values
 
-	SendVarToRover("User EnemyCC Format", self.userSettings.arCCFormat)
-	SendVarToRover("User Player CC Format", self.userSettings.arCCFormatPlayer)
+	--SendVarToRover("User EnemyCC Format", self.userSettings.arCCFormat)
+	--SendVarToRover("User Player CC Format", self.userSettings.arCCFormatPlayer)
 	--General Settings
 	self.wndMain:FindChild("CCStatePlayerTextSize"):SetText(self.userSettings.ccStatePlayerFontSize)
 	self.wndMain:FindChild("CCStateEnemyTextSize"):SetText(self.userSettings.ccStateEnemyFontSize)
@@ -476,7 +476,7 @@ function YetAnotherSCT:LoadUserSettings()
 		else
 			btnPlayerOption:SetCheck(false)
 		end
-			SendVarToRover("ParentText",tParentText)
+			--SendVarToRover("ParentText",tParentText)
 	end
 
 
@@ -598,8 +598,8 @@ function YetAnotherSCT:OnYetAnotherSCTOn(cmd, args)
 	self:LoadFonts()	
 	self:LoadAnimationShapes()
 	self:LoadUserSettings()
-	SendVarToRover("arCCFormat Loaded", self.userSettings.arCCFormat)
-	SendVarToRover("arCCFormatPlayer Loaded", self.userSettings.arCCFormatPlayer)
+	--SendVarToRover("arCCFormat Loaded", self.userSettings.arCCFormat)
+	--SendVarToRover("arCCFormatPlayer Loaded", self.userSettings.arCCFormatPlayer)
 	self.wndMain:Show(true)
 	if args == string.lower("align") then
 		if GameLib.GetPlayerUnit():GetName() == "Thoughtcrime" then 
@@ -2142,8 +2142,8 @@ function YetAnotherSCT:OnCombatLogCCState(tEventArgs)
 			[5] = {						fTime = 1.3 + fMaxDuration,	fAlpha = 0.0,							fVelocityDirection = 0,},
 		}
 	end
-	SendVarToRover("CCApplied", arCCFormat)
-	SendVarToRover("CCEventArgs", tEventArgs)
+	--SendVarToRover("CCApplied", arCCFormat)
+	--SendVarToRover("CCEventArgs", tEventArgs)
 	CombatFloater.ShowTextFloater( tEventArgs.unitTarget, strMessage, tTextOption )
 end
 
@@ -2294,7 +2294,7 @@ end
 function YetAnotherSCT:OnDelayedFloatTextTimer()
 	local tParams = self.tDelayedFloatTextQueue:Pop()
 	Event_FireGenericEvent("Float_RequestShowTextFloater", tParams.eMessageType, tParams, tParams.tContent) -- TODO: Event!!!!
-	SendVarToRover("DelayedFloatText Params",tParams)
+	--SendVarToRover("DelayedFloatText Params",tParams)
 end
 
 ---------------------------------------------------------------------------------------------------
@@ -2370,8 +2370,8 @@ end
 ---------------------------------------------------------------------------------------------------
 
 function YetAnotherSCT:IncomingDamageAnimationShapes(tTextOption,shape,nBaseColor,nHighlightColor,fMaxSize,nOffsetDirection,fOffsetAmount,fMaxDuration,eCollisionMode,flashSizeMultiplier,nStallTime)
-		SendVarToRover("shape",shape)
-		SendVarToRover("tTextOption",tTextOption)
+		--SendVarToRover("shape",shape)
+		--SendVarToRover("tTextOption",tTextOption)
 
 	if shape == "Default" then
 		tTextOption.arFrames =
@@ -2435,7 +2435,7 @@ end
 function YetAnotherSCT:OutgoingDamageFontColor( wndHandler, wndControl, eMouseButton )
 	local function NormalColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("No Color Selected")
 		else
 			self.wndMain:FindChild("ODTF"):SetTextColor(color)
 		end
