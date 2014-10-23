@@ -1669,6 +1669,7 @@ local mO = tonumber(self.userSettings.mergeOutgoing)
 			tTextOption.fOffset = math.random(1, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			nBaseColor = "0x"..self.userSettings.outgoingHealFontColor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
 			
 			if swapO == 1 then
@@ -1714,6 +1715,7 @@ local mO = tonumber(self.userSettings.mergeOutgoing)
 			tTextOption.fOffset = math.random(0, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			nBaseColor = "0x"..self.userSettings.outgoingHealFontColor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
 			
 			if iMO == 1 then
@@ -1941,6 +1943,8 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			tTextOption.fOffset = math.random(1, 1)--/100
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			nBaseColor = "0x"..self.userSettings.incomingHealFontColor
+
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
 			if swapI == 1 then
 				tTextOption.fOffsetDirection = 90
@@ -1973,6 +1977,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			tTextOption.fOffset = math.random(0, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			nBaseColor = "0x"..self.userSettings.incomingHealFontColor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
 			
 			if iMI == 1 then
