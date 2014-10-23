@@ -2020,8 +2020,8 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 		tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 
 		-- scale and movement
-		tTextOption.arFrames = self:IncomingDamageAnimationShapes(tTextOption, self.userSettings.incomingDamageAnimationShape, nBaseColor, nHighlightColor,fMaxSize,nOffsetDirection,fOffsetAmount,fMaxDuration,eCollisionMode,flashSizeMultiplier,nStallTime)
-		--[[
+		--tTextOption.arFrames = self:IncomingDamageAnimationShapes(tTextOption, self.userSettings.incomingDamageAnimationShape, nBaseColor, nHighlightColor,fMaxSize,nOffsetDirection,fOffsetAmount,fMaxDuration,eCollisionMode,flashSizeMultiplier,nStallTime)
+		
 		tTextOption.arFrames =
 		{
 		[1] = {fScale = fMaxSize * flashSizeMultiplier,	fTime = 0,											nColor = nHighlightColor,	fVelocityDirection = 180,		fVelocityMagnitude = 0,},
@@ -2029,7 +2029,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 		[3] = {fScale = fMaxSize,						fTime = 0.1,					fAlpha = 1.0,		nColor = nBaseColor,},
 		[4] = {											fTime = 0.3 + nStallTime,		fAlpha = 1.0,									fVelocityDirection = 180,		fVelocityMagnitude = 3,},
 		[5] = {											fTime = 0.65 + fMaxDuration,	fAlpha = 0.2,									fVelocityDirection = 180,},
-		}]]--
+		}
 	end
 	
 	if bCritical == true then
@@ -2377,14 +2377,14 @@ end
 -- Incoming Damage Animation Shapes
 ---------------------------------------------------------------------------------------------------
 
-function YetAnotherSCT:IncomingDamageAnimationShapes(tTextOption,shape,nBaseColor,nHighlightColor,fMaxSize,nOffsetDirection,fOffsetAmount,fMaxDuration,eCollisionMode,flashSizeMultiplier,nStallTime)
+function YetAnotherSCT:IncomingDamageAnimationShapes(tTextOption, shape, nBaseColor, nHighlightColor,fMaxSize,nOffsetDirection,fOffsetAmount,fMaxDuration,eCollisionMode,flashSizeMultiplier,nStallTime)
 		--SendVarToRover("shape",shape)
 		--SendVarToRover("tTextOption",tTextOption)
 
 	if shape == "Default" then
 		tTextOption.arFrames =
 		{
-		[1] = {fScale = fMaxSize * flashSizeMultiplier,	fTime = 0,											nColor = nHighlightColor,	fVelocityDirection = 180,		fVelocityMagnitude = 0,},
+		[1] = {fScale = fMaxSize * flashSizeMultiplier,	fTime = 0,										nColor = nHighlightColor,	fVelocityDirection = 180,		fVelocityMagnitude = 0,},
 		[2] = {fScale = fMaxSize * 1.5,					fTime = 0.05,										nColor = nHighlightColor,	fVelocityDirection = 180,		fVelocityMagnitude = 2,},
 		[3] = {fScale = fMaxSize,						fTime = 0.1,					fAlpha = 1.0,		nColor = nBaseColor,},
 		[4] = {											fTime = 0.3 + nStallTime,		fAlpha = 1.0,									fVelocityDirection = 180,		fVelocityMagnitude = 3,},
