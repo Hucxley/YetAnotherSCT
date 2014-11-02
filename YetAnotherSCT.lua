@@ -119,55 +119,55 @@ local YetAnotherSCT = {
     --Removing an entry from this table means no floater is shown for that state.
 	{
 		[Unit.CodeEnumCCState.Stun] 				= 0xff2b2b,
-		[Unit.CodeEnumCCState.Sleep] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Root] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Sleep] 				= 0xff2b2b,
+		[Unit.CodeEnumCCState.Root] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.Disarm] 			= 0xff2b2b,
 		[Unit.CodeEnumCCState.Silence] 			= 0xff2b2b,
 		[Unit.CodeEnumCCState.Polymorph] 		= 0xff2b2b,
-		[Unit.CodeEnumCCState.Fear] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Hold] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Fear] 				= 0xff2b2b,
+		[Unit.CodeEnumCCState.Hold] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.Knockdown] 		= 0xff2b2b,
 		[Unit.CodeEnumCCState.Disorient] 		= 0xff2b2b,
-		[Unit.CodeEnumCCState.Disable] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Taunt] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Disable]	 		= 0xff2b2b,
+		[Unit.CodeEnumCCState.Taunt] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.DeTaunt] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Blind] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Knockback] 		= 0xff2b2b,
-		[Unit.CodeEnumCCState.Pushback] 		= 0xff2b2b,
-		[Unit.CodeEnumCCState.Pull] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Blind]	 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Knockback]		 	= 0xff2b2b,
+		[Unit.CodeEnumCCState.Pushback] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Pull] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.PositionSwitch] 	= 0xff2b2b,
 		[Unit.CodeEnumCCState.Tether] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Snare] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Snare] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.Interrupt] 		= 0xff2b2b,
-		[Unit.CodeEnumCCState.Daze] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Daze] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.Subdue] 			= 0xff2b2b,
 	},
 
 	--Enemy CC Status
 	arCCFormat =  --Removing an entry from this table means no floater is shown for that state.
 	{
-		[Unit.CodeEnumCCState.Stun] 			= 0xffe691, -- stun
-		[Unit.CodeEnumCCState.Sleep] 			= 0xffe691, -- sleep
-		[Unit.CodeEnumCCState.Root] 			= 0xffe691, -- root
+		[Unit.CodeEnumCCState.Stun] 				= 0xffe691, -- stun
+		[Unit.CodeEnumCCState.Sleep] 				= 0xffe691, -- sleep
+		[Unit.CodeEnumCCState.Root] 				= 0xffe691, -- root
 		[Unit.CodeEnumCCState.Disarm] 			= 0xffe691, -- disarm
 		[Unit.CodeEnumCCState.Silence] 			= 0xffe691, -- silence
 		[Unit.CodeEnumCCState.Polymorph] 		= 0xffe691, -- polymorph
-		[Unit.CodeEnumCCState.Fear] 			= 0xffe691, -- fear
-		[Unit.CodeEnumCCState.Hold] 			= 0xffe691, -- hold
+		[Unit.CodeEnumCCState.Fear] 				= 0xffe691, -- fear
+		[Unit.CodeEnumCCState.Hold] 				= 0xffe691, -- hold
 		[Unit.CodeEnumCCState.Knockdown] 		= 0xffe691, -- knockdown
 		[Unit.CodeEnumCCState.Disorient] 		= 0xffe691,
 		[Unit.CodeEnumCCState.Disable] 			= 0xffe691,
-		[Unit.CodeEnumCCState.Taunt] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Taunt] 				= 0xffe691,
 		[Unit.CodeEnumCCState.DeTaunt] 			= 0xffe691,
-		[Unit.CodeEnumCCState.Blind] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Blind] 				= 0xffe691,
 		[Unit.CodeEnumCCState.Knockback] 		= 0xffe691,
 		[Unit.CodeEnumCCState.Pushback ] 		= 0xffe691,
-		[Unit.CodeEnumCCState.Pull] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Pull] 				= 0xffe691,
 		[Unit.CodeEnumCCState.PositionSwitch] 	= 0xffe691,
 		[Unit.CodeEnumCCState.Tether] 			= 0xffe691,
-		[Unit.CodeEnumCCState.Snare] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Snare] 				= 0xffe691,
 		[Unit.CodeEnumCCState.Interrupt] 		= 0xffe691,
-		[Unit.CodeEnumCCState.Daze] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Daze] 				= 0xffe691,
 		[Unit.CodeEnumCCState.Subdue] 			= 0xffe691,
 	},
 	},
@@ -315,55 +315,55 @@ function YetAnotherSCT:DefaultSettings()
 	self.userSettings.ccStateEnemyFontDuration = 2
 	self.userSettings.arCCFormat =  --Removing an entry from this table means no floater is shown for that state.
 	{
-		[Unit.CodeEnumCCState.Stun] 			= 0xffe691, -- stun
-		[Unit.CodeEnumCCState.Sleep] 			= 0xffe691, -- sleep
-		[Unit.CodeEnumCCState.Root] 			= 0xffe691, -- root
+		[Unit.CodeEnumCCState.Stun] 				= 0xffe691, -- stun
+		[Unit.CodeEnumCCState.Sleep] 				= 0xffe691, -- sleep
+		[Unit.CodeEnumCCState.Root] 				= 0xffe691, -- root
 		[Unit.CodeEnumCCState.Disarm] 			= 0xffe691, -- disarm
 		[Unit.CodeEnumCCState.Silence] 			= 0xffe691, -- silence
 		[Unit.CodeEnumCCState.Polymorph] 		= 0xffe691, -- polymorph
-		[Unit.CodeEnumCCState.Fear] 			= 0xffe691, -- fear
-		[Unit.CodeEnumCCState.Hold] 			= 0xffe691, -- hold
+		[Unit.CodeEnumCCState.Fear] 				= 0xffe691, -- fear
+		[Unit.CodeEnumCCState.Hold] 				= 0xffe691, -- hold
 		[Unit.CodeEnumCCState.Knockdown] 		= 0xffe691, -- knockdown
 		[Unit.CodeEnumCCState.Disorient] 		= 0xffe691,
 		[Unit.CodeEnumCCState.Disable] 			= 0xffe691,
-		[Unit.CodeEnumCCState.Taunt] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Taunt] 				= 0xffe691,
 		[Unit.CodeEnumCCState.DeTaunt] 			= 0xffe691,
-		[Unit.CodeEnumCCState.Blind] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Blind] 				= 0xffe691,
 		[Unit.CodeEnumCCState.Knockback] 		= 0xffe691,
 		[Unit.CodeEnumCCState.Pushback ] 		= 0xffe691,
-		[Unit.CodeEnumCCState.Pull] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Pull] 				= 0xffe691,
 		[Unit.CodeEnumCCState.PositionSwitch] 	= 0xffe691,
 		[Unit.CodeEnumCCState.Tether] 			= 0xffe691,
-		[Unit.CodeEnumCCState.Snare] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Snare] 				= 0xffe691,
 		[Unit.CodeEnumCCState.Interrupt] 		= 0xffe691,
-		[Unit.CodeEnumCCState.Daze] 			= 0xffe691,
+		[Unit.CodeEnumCCState.Daze] 				= 0xffe691,
 		[Unit.CodeEnumCCState.Subdue] 			= 0xffe691,
 	}
 	self.userSettings.arCCFormatPlayer =
     --Removing an entry from this table means no floater is shown for that state.
 	{
-		[Unit.CodeEnumCCState.Stun] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Sleep] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Root] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Stun] 				= 0xff2b2b,
+		[Unit.CodeEnumCCState.Sleep] 				= 0xff2b2b,
+		[Unit.CodeEnumCCState.Root] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.Disarm] 			= 0xff2b2b,
 		[Unit.CodeEnumCCState.Silence] 			= 0xff2b2b,
 		[Unit.CodeEnumCCState.Polymorph] 		= 0xff2b2b,
-		[Unit.CodeEnumCCState.Fear] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Hold] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Fear] 				= 0xff2b2b,
+		[Unit.CodeEnumCCState.Hold] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.Knockdown] 		= 0xff2b2b,
 		[Unit.CodeEnumCCState.Disorient] 		= 0xff2b2b,
 		[Unit.CodeEnumCCState.Disable] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Taunt] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Taunt] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.DeTaunt] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Blind] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Blind] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.Knockback] 		= 0xff2b2b,
-		[Unit.CodeEnumCCState.Pushback] 		= 0xff2b2b,
-		[Unit.CodeEnumCCState.Pull] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Pushback] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Pull] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.PositionSwitch] 	= 0xff2b2b,
 		[Unit.CodeEnumCCState.Tether] 			= 0xff2b2b,
-		[Unit.CodeEnumCCState.Snare] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Snare] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.Interrupt] 		= 0xff2b2b,
-		[Unit.CodeEnumCCState.Daze] 			= 0xff2b2b,
+		[Unit.CodeEnumCCState.Daze] 				= 0xff2b2b,
 		[Unit.CodeEnumCCState.Subdue] 			= 0xff2b2b,
 	}
 
@@ -1826,7 +1826,6 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			return
 		end
 	end
-
 	local bShowFloater = true
 	local tTextOption = self:GetDefaultTextOption()
 	local tTextOptionAbsorb = self:GetDefaultTextOption()
@@ -1885,6 +1884,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			tTextOption.strFontFace = self.userSettings.incomingHealFont
 			nBaseColor = "0x"..self.userSettings.incomingHealFontColor --Default: 0xb0ff6a
 			nHighlightColor = nBaseColor --Default: 0xb0ff6a
+			
 			fOffsetAmount = 1
 			
 		if bCritical then
@@ -1944,6 +1944,8 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			nBaseColor = "0x"..self.userSettings.incomingHealFontColor
+			Print('incomingHealFontColor: '.."0x".. self.userSettings.incomingHealFontColor .. ' (base color:' .. nBaseColor .. ')')
+			nHighlightColor = nBaseColor
 
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
 			if swapI == 1 then
@@ -1952,13 +1954,15 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			else
 				tTextOption.fOffsetDirection = 270
 				velocityDirection = 270
+				Print('incomingDamageFontColor: '.."0x".. self.userSettings.incomingDamageFontColor .. ' (base color:' .. nBaseColor .. ')')
 			end
 			
-			else
+		else
 			--tTextOption.fOffsetDirection = nOffset
 			tTextOption.fOffset = math.random(1, 1)--/100
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			Print('incomingDamageFontColor: '.."0x".. self.userSettings.incomingDamageFontColor .. ' (base color:' .. nBaseColor .. ')')
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
 			if swapI == 1 then
 				tTextOption.fOffsetDirection = 270
@@ -1978,6 +1982,7 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			nBaseColor = "0x"..self.userSettings.incomingHealFontColor
+			nHighlightColor = nBaseColor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
 			
 			if iMI == 1 then
@@ -1993,6 +1998,8 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			tTextOption.fOffset = math.random(0, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			nBaseColor = "0x" .. self.userSettings.incomingDamageFontColor
+			nHighlightColor = nBaseColor
 			--tTextOption.fOffset = 4 -- GOTCHA: Different
 
 			if iMI == 1 then
@@ -2006,11 +2013,11 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 		
 		tTextOption.arFrames =
 			{
-			[1] = {fScale = fMaxSize * flashSizeMultiplier * 0.5, nColor = nBaseColor, fTime = 0,			fAlpha = 0,		fVelocityDirection = velocityDirection,	fVelocityMagnitude = 5,},-- Default 0.8},
-			[2] = {fTime = 0.15,		fAlpha = 1.0,	fVelocityDirection = velocityDirection,	fVelocityMagnitude = .2, nColor = nBaseColor},
-			[3] = {fTime = 0.5,			fAlpha = 1.0,	fVelocityDirection = velocityDirection,	fVelocityMagnitude = .2},
+			[1] = {fScale = fMaxSize * flashSizeMultiplier * 0.5, 	fTime = 0, 	nColor = nHighlightColor, 	fAlpha = 0,			fVelocityDirection = velocityDirection,	fVelocityMagnitude = 5,},-- Default 0.8},
+			[2] = {fTime = 0.15,			fAlpha = 1.0,	nColor = nHighlightColor, 	fVelocityDirection = velocityDirection,		fVelocityMagnitude = .2, },
+			[3] = {fTime = 0.5,			fAlpha = 1.0,	nColor = nBaseColor, 		fVelocityDirection = velocityDirection,		fVelocityMagnitude = .2, },
 			[4] = {fTime = 1.0,	},
-			[5] = {fTime = 1.1,			fAlpha = 1.0,	fVelocityDirection 	= velocityDirection,	fVelocityMagnitude 	= 15,},
+			[5] = {fTime = 1.1,			fAlpha = 1.0,										fVelocityDirection 	= velocityDirection,	fVelocityMagnitude 	= 15,},
 			[6] = {fTime = 1.3 + fMaxDuration * 0.1,			fAlpha 	= 0.0,},
 			}
 
@@ -2024,9 +2031,9 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 		
 		tTextOption.arFrames =
 		{
-		[1] = {fScale = fMaxSize * flashSizeMultiplier,	fTime = 0,											nColor = nHighlightColor,	fVelocityDirection = 180,		fVelocityMagnitude = 0,},
+		[1] = {fScale = fMaxSize * flashSizeMultiplier,	fTime = 0,										nColor = nHighlightColor,	fVelocityDirection = 180,		fVelocityMagnitude = 0,},
 		[2] = {fScale = fMaxSize * 1.5,					fTime = 0.05,										nColor = nHighlightColor,	fVelocityDirection = 180,		fVelocityMagnitude = 2,},
-		[3] = {fScale = fMaxSize,						fTime = 0.1,					fAlpha = 1.0,		nColor = nBaseColor,},
+		[3] = {fScale = fMaxSize,							fTime = 0.1,				fAlpha = 1.0,		nColor = nBaseColor,},
 		[4] = {											fTime = 0.3 + nStallTime,		fAlpha = 1.0,									fVelocityDirection = 180,		fVelocityMagnitude = 3,},
 		[5] = {											fTime = 0.65 + fMaxDuration,	fAlpha = 0.2,									fVelocityDirection = 180,},
 		}
@@ -2762,7 +2769,7 @@ function YetAnotherSCT:OnPlayerCCButtonCheck (wndHandler, wndControl, eMouseButt
 	local wnd = wndControl
 	local ccName = wnd:GetParent():GetText()
 	self.userSettings.arCCFormatPlayer[Unit.CodeEnumCCState[ccName]] = nil
-	wnd:SetData("Hidden")
+	--wnd:SetData("Hidden")
 
 end
 
@@ -2771,7 +2778,7 @@ function YetAnotherSCT:OnPlayerCCButtonUncheck (wndHandler, wndControl, eMouseBu
 	local ccName = wnd:GetParent():GetText()
 	local color = "0x"..self.userSettings.ccStatePlayerFontColor
 	self.userSettings.arCCFormatPlayer[Unit.CodeEnumCCState[ccName]] = color
-	wnd:SetData("Shown")
+	--wnd:SetData("Shown")
 
 end
 
@@ -2779,7 +2786,7 @@ function YetAnotherSCT:OnEnemyCCButtonCheck (wndHandler, wndControl, eMouseButto
 	local wnd = wndControl
 	local ccName = wnd:GetParent():GetText()
 	self.userSettings.arCCFormat[Unit.CodeEnumCCState[ccName]] = nil
-	wnd:SetData("Hidden")
+	--wnd:SetData("Hidden")
 
 
 end
@@ -2789,7 +2796,7 @@ function YetAnotherSCT:OnEnemyCCButtonUncheck (wndHandler, wndControl, eMouseBut
 	local ccName = wnd:GetParent():GetText()
 	local color = "0x"..self.userSettings.ccStateEnemyFontColor
 	self.userSettings.arCCFormat[Unit.CodeEnumCCState[ccName]] = color
-	wnd:SetData("Shown")
+	--wnd:SetData("Shown")
 
 end
 
