@@ -211,7 +211,7 @@ function YetAnotherSCT:OnLoad() -- OnLoad then GetAsyncLoad then OnRestore
 	Apollo.RegisterSlashCommand("YASCT", 					"OnYetAnotherSCTOn", self)
 	self.xmlDoc = XmlDoc.CreateFromFile("OptionsForm.xml")
 	self.Custom = XmlDoc.CreateFromFile("YASCTCustomizationAssist.xml")
-
+	self:Initialize()
 	
 	--TODO
 	--self:DefaultSettings()
@@ -227,7 +227,7 @@ end
 
 -- Save User Settings
 function YetAnotherSCT:OnSave(eType)
-Print("OnSave")
+Print("YASCT User Settings saved for next session")
 	local tSave = self.userSettings
 	if eType ~= GameLib.CodeEnumAddonSaveLevel.Account then
 		return nil
@@ -751,13 +751,6 @@ end
 end
 
 -- END
-function YetAnotherSCT:GetAsyncLoadStatus()
-	if g_InterfaceOptionsLoaded then
-		self:Initialize()
-		return Apollo.AddonLoadStatus.Loaded
-	end
-	return Apollo.AddonLoadStatus.Loading
-end
 
 function YetAnotherSCT:Initialize()
 	Apollo.RegisterEventHandler("LootedMoney", 								"OnLootedMoney", self)
@@ -1635,7 +1628,7 @@ function YetAnotherSCT:OnDamageOrHealing( unitCaster, unitTarget, eDamageType, n
 	if eDamageType == GameLib.CodeEnumDamageType.Heal then -- healing params
 		if nDamage < tonumber(self.userSettings.outgoingHealMinimumShown) then return end --healing value below minimum shown, dump
 		-- healing above minimum shown threshold, continue
-		nBaseColor = bCritical and "0x"..self.userSettings.outgoingCritHealFontColor or "0x"..self.userSettings.outgoingHealFontColor --Default: and 0xcdffa0 or 0xb0ff6a
+		nBaseColor = bCritical and "0x"..self.userSettings.outgoingCritHealFontColor or "0x".. self.userSettings.outgoingHealFontColor --Default: and 0xcdffa0 or 0xb0ff6a
 		fMaxSize = bCritical and self.userSettings.outgoingCritHealFontSize or self.userSettings.outgoingHealFontSize --Default: and 0.9 or 0.7
 		tTextOption.strFontFace = bCritical and self.userSettings.outgoingCritHealFont or self.userSettings.outgoingHealFont
 		fMaxDuration = bCritical and self.userSettings.outgoingCritHealDuration or self.userSettings.outgoingHealDuration
@@ -1669,7 +1662,7 @@ local mO = tonumber(self.userSettings.mergeOutgoing)
 			tTextOption.fOffset = math.random(1, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
-			nBaseColor = "0x"..self.userSettings.outgoingHealFontColor
+			nBaseColor = bCritical and "0x"..self.userSettings.outgoingCritHealFontColor or "0x".. self.userSettings.outgoingHealFontColor
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
 			
 			if swapO == 1 then
@@ -1685,6 +1678,7 @@ local mO = tonumber(self.userSettings.mergeOutgoing)
 			tTextOption.fOffset = math.random(1, 1)
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
+			nBaseColor = "0x"..self.userSettings.outgoingDamageFontColor
 			--tTextOption.fOffset = 4 -- GOTCHA: Different
 
 			if swapO == 1 then
@@ -1944,7 +1938,6 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
 			nBaseColor = "0x"..self.userSettings.incomingHealFontColor
-			Print('incomingHealFontColor: '.."0x".. self.userSettings.incomingHealFontColor .. ' (base color:' .. nBaseColor .. ')')
 			nHighlightColor = nBaseColor
 
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
@@ -1954,7 +1947,6 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			else
 				tTextOption.fOffsetDirection = 270
 				velocityDirection = 270
-				Print('incomingDamageFontColor: '.."0x".. self.userSettings.incomingDamageFontColor .. ' (base color:' .. nBaseColor .. ')')
 			end
 			
 		else
@@ -1962,7 +1954,6 @@ function YetAnotherSCT:OnPlayerDamageOrHealing(unitPlayer, eDamageType, nDamage,
 			tTextOption.fOffset = math.random(1, 1)--/100
 			tTextOption.eCollisionMode = CombatFloater.CodeEnumFloaterCollisionMode.Vertical
 			tTextOption.eLocation = self.userSettings.sCombatTextAnchor
-			Print('incomingDamageFontColor: '.."0x".. self.userSettings.incomingDamageFontColor .. ' (base color:' .. nBaseColor .. ')')
 			--tTextOption.fOffset = 4.0 -- GOTCHA: Different
 			if swapI == 1 then
 				tTextOption.fOffsetDirection = 270
@@ -2461,16 +2452,13 @@ end
 function YetAnotherSCT:OutgoingCritFontColor( wndHandler, wndControl, eMouseButton )
 	local function CritColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("Outgoing Crit Font Color not set")
 		else
 			self.wndMain:FindChild("ODCTF"):SetTextColor(color)
 		end
 	end
 	ColorPicker.AdjustCColor(outgoingCritColorAsCColor, false, CritColorCallBack, outgoingCritColorAsCColor)
 end
-
-local YetAnotherSCTInst = YetAnotherSCT:new()
-YetAnotherSCTInst:Init()
 
 --Heal
 function YetAnotherSCT:OutgoingHealingFontChange( wndHandler, wndControl )
@@ -2486,7 +2474,7 @@ end
 function YetAnotherSCT:OnHealingFontColor( wndHandler, wndControl, eMouseButton )
 	local function NormalColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("Healing Font Color not set")
 		else
 			self.wndMain:FindChild("OHTF"):SetTextColor(color)
 		end
@@ -2497,7 +2485,7 @@ end
 function YetAnotherSCT:OutgoingCritHealingColor( wndHandler, wndControl, eMouseButton )
 	local function CritColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("Outgoing Crit Healing Color not set")
 		else
 			self.wndMain:FindChild("OHCTF"):SetTextColor(color)
 		end
@@ -2509,7 +2497,7 @@ end
 function YetAnotherSCT:IncomingDamageFontColor( wndHandler, wndControl, eMouseButton )
 	local function NormalColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("Incoming Damage Font Color not set")
 		else
 			self.wndMain:FindChild("IDTF"):SetTextColor(color)
 		end
@@ -2520,7 +2508,7 @@ end
 function YetAnotherSCT:IncomingCritFontColor( wndHandler, wndControl, eMouseButton )
 	local function CritColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("Incoming Crit Font Color not set")
 		else
 			self.wndMain:FindChild("IDCTF"):SetTextColor(color)
 		end
@@ -2541,7 +2529,7 @@ end
 function YetAnotherSCT:IncomingHealingFontColor( wndHandler, wndControl, eMouseButton )
 	local function NormalColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("Incoming Healing Color Font not set")
 		else
 			self.wndMain:FindChild("IHTF"):SetTextColor(color)
 		end
@@ -2552,7 +2540,7 @@ end
 function YetAnotherSCT:IncomingCritHealingFontColor( wndHandler, wndControl, eMouseButton )
 	local function CritColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("Incoming Crit Healing Font Color not set")
 		else
 			self.wndMain:FindChild("IHCTF"):SetTextColor(color)
 		end
@@ -2610,7 +2598,7 @@ end
 function YetAnotherSCT:CCStatePlayerColor( wndHandler, wndControl, eMouseButton )
 	local function ColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("CC State for Player Color not set")
 		else
 			self.wndMain:FindChild("label_102"):SetTextColor(color)
 		end
@@ -2621,7 +2609,7 @@ end
 function YetAnotherSCT:CCStateEnemyColor( wndHandler, wndControl, eMouseButton )
 		local function ColorCallBack(color)
 		if color == nil then
-			Print("nil")
+			Print("CC State for Enemey Color not set")
 		else
 			self.wndMain:FindChild("label_103"):SetTextColor(color)
 		end
@@ -2799,6 +2787,9 @@ function YetAnotherSCT:OnEnemyCCButtonUncheck (wndHandler, wndControl, eMouseBut
 	--wnd:SetData("Shown")
 
 end
+
+local YetAnotherSCTInst = YetAnotherSCT:new()
+YetAnotherSCTInst:Init()
 
 ---------------------------------------------------------------------------------------------------
 -- Register Packages
